@@ -2,37 +2,38 @@
 # https://076923.github.io/posts/Python-opencv-28/
 
 # 표준 허프 변환(Standard Hough Transform) & 멀티 스케일 허프 변환(Multi-Scale Hough Transform)
-# cv2.HoughLines(img, rho, theta, threshold, lines, srn=0, stn=0, min_theta, max_theta)
-#   img: 입력 이미지, 1 채널 바이너리 스케일
-#   rho: 거리 측정 해상도, 0~1
-#   theta: 각도, 라디안 단위 (np.pi/0~180)
-#   threshold: 직선으로 판단할 최소한의 동일 개수 (작은 값: 정확도 감소, 검출 개수 증가 / 큰 값: 정확도 증가, 검출 개수 감소)
-#   lines: 검출 결과, N x 1 x 2 배열 (r, Θ)
-#   srn, stn: 멀티 스케일 허프 변환에 사용, 선 검출에서는 사용 안 함
-#   min_theta, max_theta: 검출을 위해 사용할 최대, 최소 각도
-
 # 점진성 확률적 허프 변환(Progressive Probabilistic Hough Transform)
-
-
-
-
-
+# cv2.HoughLines(img, rho, theta, threshold, lines, srn=0, stn=0, min_theta, max_theta)
+# cv2.HoughLinesP(img, rho, theta, threshold, lines, srn=0, stn=0, min_theta, max_theta)
+#       img: 입력 이미지, 1 채널 바이너리 스케일
+#       rho: 거리 측정 해상도, 0~1
+#       theta: 각도, 라디안 단위 (np.pi/0~180)
+#       threshold: 직선으로 판단할 최소한의 동일 개수 (작은 값: 정확도 감소, 검출 개수 증가 / 큰 값: 정확도 증가, 검출 개수 감소)
+#       lines: 검출 결과, N x 1 x 2 배열 (r, Θ)
+#       srn, stn: 멀티 스케일 허프 변환에 사용, 선 검출에서는 사용 안 함
+#       min_theta, max_theta: 검출을 위해 사용할 최대, 최소 각도
+########################################################################################################################
 import cv2
 import numpy as np
 
-# =============================== 색상코드 정의 ====================================#
+########################################################################################################################
+# Define Data Path
+Path = './Data/'
+Name = 'drive.mp4'
+FileName = Path + Name
+
+########################################################################################################################
+# Define Color
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (0, 0, 255)
 GREEN = (0, 255, 0)
 BLUE = (255, 0, 0)
 
-# =============================== 데이터 불러오기 ====================================#
-Path = './Data/'
-Name = 'drive.mp4'
-FileName = Path + Name
-
 # ================================== 영상 처리 =====================================#
+########################################################################################################################
+# Define Image Processing Method
+
 # ROI로 차선 부분만 추출: 직사각형이 아닌 사다리꼴 등의 다각형으로 ROI 할 때 사용
 def region_of_interest(src, vertices, color=(255, 255, 255)):
     if len(src.shape) < 3:                  # 1 Channel = Gray Scale:
@@ -42,7 +43,8 @@ def region_of_interest(src, vertices, color=(255, 255, 255)):
     dst = cv2.bitwise_and(src, mask)        # src & ROI 이미지 합침
     return dst
 
-# ================================== 메인 루틴 =====================================#
+########################################################################################################################
+# Main Routine
 Nframe = 0                                              # frame 수
 scale = 1500                                            # Scale for Multi-Scale Hough Transform
 capture = cv2.VideoCapture(FileName)                    # VideoCapture
