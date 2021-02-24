@@ -37,28 +37,28 @@ BLUE = (255, 0, 0)
 def region_of_interest(src, vertices, color=(255, 255, 255)):
     if len(src.shape) < 3:                  # 1 Channel = Gray Scale:
         color = 255                         # Gray Scale Color Default 흰색 설정
-    mask = np.zeros_like(src)               # src와 같은 크기의 빈 이미지
+    mask = np.zeros_like(src)               # src 와 같은 크기의 빈 이미지
     cv2.fillPoly(mask, vertices, color)     # vertices 좌표로 구성된 다각형 범위내부를 color로 채움
     dst = cv2.bitwise_and(src, mask)        # src & ROI 이미지 합침
     return dst
 
 ########################################################################################################################
 # Main Routine
-Nframe = 0                                              # frame 수
-scale = 1500                                            # Scale for Multi-Scale Hough Transform
-capture = cv2.VideoCapture(FileName)                    # VideoCapture
+Nframe = 0                                                  # Frame 수
+scale = 1500                                                # Scale for Multi-Scale Hough Transform
+capture = cv2.VideoCapture(FileName)                        # VideoCapture
 while True:
     ret, frame = capture.read()                             # Video Load 성공하면 True, Frame 반환
     if ret == True:                                         # Video Load 성공했다면
         Nframe += 1                                         # Increase Frame Count
-        frame = cv2.resize(frame, (0, 0), fx=0.4, fy=0.4)   # Frame Resize
+        frame = cv2.resize(frame, (0, 0), fx=0.4, fy=0.4)   # Frame Resize 0.4
         dst = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)       # BGR2GRAY 변환
         dst = cv2.GaussianBlur(dst, (5, 5), 3)              # Gaussian Blurring, 내장함수로 한번에 적용
         dst = cv2.Canny(frame, 50, 200, None, 3)            # Canny Edge 검출, 3Channel 도 GrayScale 로 반환
-        dst1 = cv2.cvtColor(dst, cv2.COLOR_GRAY2BGR)        # GRAY2BGR 변환
-        dst2 = cv2.cvtColor(dst, cv2.COLOR_GRAY2BGR)        # GRAY2BGR 변환
+        dst1 = cv2.cvtColor(dst, cv2.COLOR_GRAY2BGR)        # 결과비교 출력을 위한 GRAY2BGR 변환, hstack/vstack 사용을 위함
+        dst2 = cv2.cvtColor(dst, cv2.COLOR_GRAY2BGR)        # 결과비교 출력을 위한 GRAY2BGR 변환, hstack/vstack 사용을 위함
 
-        # Vertices Point Setting: 수평을 기준으로 아래쪽 절반 선택
+        # Vertices Point Setting, 수평을 기준으로 아래쪽 절반 선택
         # np.array([[Top Left], [Top Right], [Bottom Right], [Bottom Left]])
         height, width = dst.shape[:2]; middle = height // 2
         point = np.array([[0, middle], [width, middle], [width, height], [0, height]])
@@ -86,6 +86,7 @@ while True:
                 cv2.line(frame, (x1, y1), (x2, y2), RED, 3, cv2.LINE_AA)
                 cv2.line(dst2, (x1, y1), (x2, y2), RED, 3, cv2.LINE_AA)
 
+        # 결과 프레임 별 텍스트 추가
         text1 = 'Source Video'
         text2 = 'ROI Video'
         text3 = 'Standard Hough Line Transform'
@@ -95,11 +96,12 @@ while True:
         cv2.putText(dst1, text3, (20, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, GREEN, 2, cv2.LINE_AA)
         cv2.putText(dst2, text4, (20, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, RED, 2, cv2.LINE_AA)
 
-        roi = cv2.cvtColor(roi, cv2.COLOR_GRAY2BGR)
-        merged1 = np.hstack((frame, roi))
-        merged2 = np.hstack((dst1, dst2))
-        merged = np.vstack((merged1, merged2))
-        cv2.imshow('Hough Convert', merged)
+        # 결과출력
+        roi = cv2.cvtColor(roi, cv2.COLOR_GRAY2BGR)     # 결과비교 출력을 위한 GRAY2BGR 변환, hstack/vstack 사용을 위함
+        merged1 = np.hstack((frame, roi))               # 수평합병, Source Video + ROI Video
+        merged2 = np.hstack((dst1, dst2))               # 수평합병, Standard + Probabilistic
+        merged = np.vstack((merged1, merged2))          # 수직합병
+        cv2.imshow('Hough Convert', merged)             # 결과출력
 
     key = cv2.waitKey(1)                    # 키보드 입력대기
     if key == 27 or key == ord('q'):        # ESC, q 를 입력하면
