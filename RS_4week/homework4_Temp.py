@@ -30,7 +30,6 @@ RED = (0, 0, 255)
 GREEN = (0, 255, 0)
 BLUE = (255, 0, 0)
 
-# ================================== 영상 처리 =====================================#
 ########################################################################################################################
 # Define Image Processing Method
 
@@ -87,10 +86,14 @@ while True:
                 cv2.line(frame, (x1, y1), (x2, y2), RED, 3, cv2.LINE_AA)
                 cv2.line(dst2, (x1, y1), (x2, y2), RED, 3, cv2.LINE_AA)
 
-        cv2.putText(frame, 'Source Video', (20, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, BLACK, 2, cv2.LINE_AA)
-        cv2.putText(roi, 'ROI Video', (20, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, WHITE, 2, cv2.LINE_AA)
-        cv2.putText(dst1, 'Standard Hough Line Transform', (20, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, GREEN, 2, cv2.LINE_AA)
-        cv2.putText(dst2, 'Probabilistic Line Transform', (20, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, RED, 2, cv2.LINE_AA)
+        text1 = 'Source Video'
+        text2 = 'ROI Video'
+        text3 = 'Standard Hough Line Transform'
+        text4 = 'Probabilistic Line Transform'
+        cv2.putText(frame, text1, (20, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, BLACK, 2, cv2.LINE_AA)
+        cv2.putText(roi, text2, (20, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, WHITE, 2, cv2.LINE_AA)
+        cv2.putText(dst1, text3, (20, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, GREEN, 2, cv2.LINE_AA)
+        cv2.putText(dst2, text4, (20, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, RED, 2, cv2.LINE_AA)
 
         roi = cv2.cvtColor(roi, cv2.COLOR_GRAY2BGR)
         merged1 = np.hstack((frame, roi))
