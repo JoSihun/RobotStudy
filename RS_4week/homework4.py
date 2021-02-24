@@ -33,8 +33,8 @@ BLUE = (255, 0, 0)
 ########################################################################################################################
 # Define Image Processing Method
 
-# ROI로 차선 부분만 추출: 직사각형이 아닌 사다리꼴 등의 다각형으로 ROI 할 때 사용
-def region_of_interest(src, vertices, color=(255, 255, 255)):
+# ROI: 다각형 마스킹, 사다리꼴 등의 다각형으로 마스킹 할 때 사용
+def region_of_interest(src, vertices, color=BLACK):
     if len(src.shape) < 3:                  # 1 Channel = Gray Scale:
         color = 255                         # Gray Scale Color Default 흰색 설정
     mask = np.zeros_like(src)               # src 와 같은 크기의 빈 이미지
