@@ -32,7 +32,6 @@ BLUE = (255, 0, 0)
 
 ########################################################################################################################
 # Define Image Processing Method
-
 # ROI: 다각형 마스킹, 사다리꼴 등의 다각형으로 마스킹 할 때 사용
 def region_of_interest(src, vertices, color=BLACK):
     if len(src.shape) < 3:                  # 1 Channel = Gray Scale:
@@ -65,26 +64,26 @@ while True:
         roi = region_of_interest(dst, [point])
 
         # 표준 허프 변환(Standard Hough Transform) & 멀티 스케일 허프 변환(Multi-Scale Hough Transform)
-        lines = cv2.HoughLines(roi, 1, np.pi / 180, 150, None, 0, 0)    # 허프변환
-        if lines is not None:
-            for line in lines:
-                rho, theta = line[0]
-                a, b = np.cos(theta), np.sin(theta)
-                x0, y0 = a * rho, b * rho
-                x1, y1 = int(x0 + scale * (-b)), int(y0 + scale * a)
-                x2, y2 = int(x0 - scale * (-b)), int(y0 - scale * a)
-                cv2.line(frame, (x1, y1), (x2, y2), GREEN, 3, cv2.LINE_AA)
-                cv2.line(dst1, (x1, y1), (x2, y2), GREEN, 3, cv2.LINE_AA)
+        lines = cv2.HoughLines(roi, 1, np.pi / 180, 150, None, 0, 0)        # 표준 허프 변환
+        if lines is not None:                                               # 직선이 검출 되었다면
+            for line in lines:                                              # 각 직선에 대해
+                rho, theta = line[0]                                        # 극좌표
+                a, b = np.cos(theta), np.sin(theta)                         # xy좌표 변환 과정
+                x0, y0 = a * rho, b * rho                                   # xy좌표 변환 결과
+                x1, y1 = int(x0 + scale * (-b)), int(y0 + scale * a)        # 직선의 스케일 평행이동을 통한 시작점 좌표계산
+                x2, y2 = int(x0 - scale * (-b)), int(y0 - scale * a)        # 직선의 스케일 평행이동을 통한 종료점 좌표계산
+                cv2.line(frame, (x1, y1), (x2, y2), GREEN, 3, cv2.LINE_AA)  # 결과이미지에 선그리기
+                cv2.line(dst1, (x1, y1), (x2, y2), GREEN, 3, cv2.LINE_AA)   # 결과이미지에 선그리기
 
         # 점진성 확률적 허프 변환(Progressive Probabilistic Hough Transform)
-        linesP = cv2.HoughLinesP(roi, 1, np.pi / 180, 50, None, 50, 10)
-        if linesP is not None:
-            for line in linesP:
-                points = line[0]
-                x1, y1 = points[0], points[1]
-                x2, y2 = points[2], points[3]
-                cv2.line(frame, (x1, y1), (x2, y2), RED, 3, cv2.LINE_AA)
-                cv2.line(dst2, (x1, y1), (x2, y2), RED, 3, cv2.LINE_AA)
+        linesP = cv2.HoughLinesP(roi, 1, np.pi / 180, 50, None, 50, 10)     # 확률적 허프 변환
+        if linesP is not None:                                              # 직선이 검출 되었다면
+            for line in linesP:                                             # 각 직선에 대해
+                points = line[0]                                            # 직선의 좌표모음
+                x1, y1 = points[0], points[1]                               # 직선의 시작점 좌표
+                x2, y2 = points[2], points[3]                               # 직선의 종료점 좌표
+                cv2.line(frame, (x1, y1), (x2, y2), RED, 3, cv2.LINE_AA)    # 결과이미지에 선그리기
+                cv2.line(dst2, (x1, y1), (x2, y2), RED, 3, cv2.LINE_AA)     # 결과이미지에 선그리기
 
         # 결과 프레임 별 텍스트 추가
         text1 = 'Source Video'

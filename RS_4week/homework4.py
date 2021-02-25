@@ -42,6 +42,22 @@ def region_of_interest(src, vertices, color=BLACK):
     dst = cv2.bitwise_and(src, mask)        # src & ROI 이미지 합침
     return dst
 
+def HoughConvert(src, lines, color):
+    for line in lines:
+        rho, theta = line[0]
+        a, b = np.cos(theta), np.sin(theta)
+        x0, y0 = a * rho, b * rho
+        x1, y1 = int(x0 + scale * (-b)), int(y0 + scale * a)
+        x2, y2 = int(x0 - scale * (-b)), int(y0 - scale * a)
+        return (x1, y1), (x2, y2)
+
+def HoughPConvert(lines):
+    for line in linesP:
+        points = line[0]
+        x1, y1 = points[0], points[1]
+        x2, y2 = points[2], points[3]
+        return (x1, y1), (x2, y2)
+
 ########################################################################################################################
 # Main Routine
 Nframe = 0                                                  # Frame 수
