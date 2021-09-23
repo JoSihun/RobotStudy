@@ -102,8 +102,8 @@ while True:
 
 ***
 Result
-<p align="center"><img width="100%" src="README_IMG/RS_1week_Homework1.png" /></p>
-<p align="center"><img width="100%" src="README_IMG/RS_1week_Homework2.png" /></p>
+<p align="center"><img width="50%" src="README_IMG/RS_1week_Homework1.png" /></p>
+<p align="center"><img width="50%" src="README_IMG/RS_1week_Homework2.png" /></p>
 
 ***
 ### 2. 2 2nd Week Edge Detecting
@@ -214,10 +214,10 @@ Result
 - Sobel Filter는 대각선 검출 및 실무적으로 사용되므로 Sobel Filter를 사용하는 것이 좋다.
 - 결과에서는 가로세로필터 더한 후 적용하는 것이 깔끔하나, OpenCV 내장 함수로 지원하고 있고,
   코드를 간결하게 작성할 수 있기 때문에 OpenCV Sobel을 사용하는 것이 좋을 것으로 추정된다.
-<p align="center"><img width="100%" src="README_IMG/RS_2week_Homework1.png" /></p>
-<p align="center"><img width="100%" src="README_IMG/RS_2week_Homework2.png" /></p>
-<p align="center"><img width="100%" src="README_IMG/RS_2week_Homework3.png" /></p>
-<p align="center"><img width="100%" src="README_IMG/RS_2week_Homework4.png" /></p>
+<p align="center"><img width="50%" src="README_IMG/RS_2week_Homework1.png" /></p>
+<p align="center"><img width="50%" src="README_IMG/RS_2week_Homework2.png" /></p>
+<p align="center"><img width="50%" src="README_IMG/RS_2week_Homework3.png" /></p>
+<p align="center"><img width="50%" src="README_IMG/RS_2week_Homework4.png" /></p>
 
 ***
 ### 2. 3 3rd Week Edge Detecting
@@ -263,8 +263,8 @@ Result
 cv2.imshow('Gaussian Filter', img1)             # 공간필터를 이용한 Blur 결과
 cv2.imshow('Gaussian Blur', img2)               # 내장함수를 이용한 Blur 결과
 ```
-<p align="center"><img width="100%" src="README_IMG/RS_3week_Homework1.png" /></p>
-<p align="center"><img width="100%" src="README_IMG/RS_3week_Homework2.png" /></p>
+<p align="center"><img width="50%" src="README_IMG/RS_3week_Homework1.png" /></p>
+<p align="center"><img width="50%" src="README_IMG/RS_3week_Homework2.png" /></p>
 
 ***
 ```python3
@@ -312,8 +312,8 @@ cv2.imshow('ROI2', roi2)
 cv2.waitKey()
 cv2.destroyAllWindows()
 ```
-<p align="center"><img width="100%" src="README_IMG/RS_3week_Homework3.png" /></p>
-<p align="center"><img width="100%" src="README_IMG/RS_3week_Homework4.png" /></p>
+<p align="center"><img width="50%" src="README_IMG/RS_3week_Homework3.png" /></p>
+<p align="center"><img width="50%" src="README_IMG/RS_3week_Homework4.png" /></p>
 Conclusion
 - `Gaussian Blurring`은 `Kennel`을 이용한 공간필터링으로 수행하는 것이 더 높은 정확도를 나타낸다.
 - 실전에서 `ROI`의 다각형 범위를 잘 지정하는 것이 더 높은 정확도를 위한 관건이 될 것이다.
@@ -451,7 +451,7 @@ Result
 <p align="center"><img width="100%" src="README_IMG/RS_4week_Homework1.png" /></p>
 <p align="center"><img width="100%" src="README_IMG/RS_4week_Homework2.png" /></p>
 <p align="center"><img width="100%" src="README_IMG/RS_4week_Homework3.png" /></p>
-<p align="center"><img width="100%" src="README_IMG/RS_4week_Homework4.png" /></p>
+<p align="center"><img width="50%" src="README_IMG/RS_4week_Homework4.png" /></p>
 Conclusion
 - `ROI영상`을 통해 `표준허프변환`이 꽤 정확하게 차선을 검출했음을 확인.
 - `확률적허프변환`도 대체적으로 잘 검출했으나, 가드레일을 차선으로 검출하거나, 앞 차의 뒷 범퍼를 차선으로 검출하는 등
