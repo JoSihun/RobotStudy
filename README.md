@@ -1,8 +1,5 @@
 # RobotStudy
-
 Image Processing Study for Robot Programming
-- Upbit API: [[Pyubit](https://github.com/sharebook-kr/pyupbit)]
-- Fbprophet: 
 
 ## 1. Environments
 
